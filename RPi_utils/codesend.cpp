@@ -24,11 +24,11 @@ int main(int argc, char *argv[]) {
     // This pin is not the first pin on the RPi GPIO header!
     // Consult https://projects.drogon.net/raspberry-pi/wiringpi/pins/
     // for more information.
-    int PIN = 0;
+    int wiringPi_PIN = 5; // PIN 18
     
     // Parse the first parameter to this command as an integer
     int protocol = 0; // A value of 0 will use rc-switch's default value
-    int pulseLength = 0;
+    int pulseLength = 150;
 
     // If no command line argument is given, print the help text
     if (argc == 1) {
@@ -43,13 +43,15 @@ int main(int argc, char *argv[]) {
     int code = atoi(argv[1]);
     if (argc >= 3) protocol = atoi(argv[2]);
     if (argc >= 4) pulseLength = atoi(argv[3]);
+    printf("protocol:%i\n", protocol);
+    printf("pulse:%i\n", pulseLength);
     
     if (wiringPiSetup () == -1) return 1;
     printf("sending code[%i]\n", code);
     RCSwitch mySwitch = RCSwitch();
     if (protocol != 0) mySwitch.setProtocol(protocol);
     if (pulseLength != 0) mySwitch.setPulseLength(pulseLength);
-    mySwitch.enableTransmit(PIN);
+    mySwitch.enableTransmit(wiringPi_PIN);
     
     mySwitch.send(code, 24);
     

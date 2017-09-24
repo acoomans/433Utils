@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
      // This pin is not the first pin on the RPi GPIO header!
      // Consult https://projects.drogon.net/raspberry-pi/wiringpi/pins/
      // for more information.
-     int PIN = 2;
+     int wiringPi_PIN = 6; // PIN 22
      
      if(wiringPiSetup() == -1) {
        printf("wiringPiSetup failed, exiting...");
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 
      mySwitch = RCSwitch();
      if (pulseLength != 0) mySwitch.setPulseLength(pulseLength);
-     mySwitch.enableReceive(PIN);  // Receiver on interrupt 0 => that is pin #2
+     mySwitch.enableReceive(wiringPi_PIN);  
      
     
      while(1) {
